@@ -26,7 +26,7 @@ const TodoList: React.FC = () => {
     const handleAdd = () => {
         if (inputText.trim() !== '') {
             setList([...list, { id: Date.now(), text: inputText, isChecked: false }]);
-            setInputText(''); // input 필드를 비웁니다
+            setInputText('');
         }
     };
 
