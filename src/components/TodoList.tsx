@@ -25,41 +25,67 @@ const TodoList: React.FC = () => {
 
     const handleAdd = () => {
         if (inputText.trim() !== '') {
-            //const id = list.length > 0 ? list[list.length - 1].id + 1 : 1;
             setList([...list, { id: Date.now(), text: inputText, isChecked: false }]);
-            setInputText('');
+            setInputText(''); // input 필드를 비웁니다
         }
     };
 
     return (
         <div>
             <h1>{title}</h1>
-            <div style={{ marginTop: '2rem', marginBottom: '0.7rem' }}>
-                <input type="text"
+            <div style={containerStyle}>
+                <input
+                    type="text"
                     value={inputText}
                     placeholder='add your to do thing'
-                    style={{ padding: '0.1rem', marginRight: '1rem' }}
+                    style={inputStyle}
                     onChange={(e) => setInputText(e.target.value)}
                 />
                 <Button variant="outline-dark" onClick={handleAdd}>Add</Button>
             </div>
-            <ul style={{ listStyleType: 'none' }}>
-                {list.map((item) => (
-                    <li key={item.id}>
-                        <input
-                            type="checkbox"
-                            checked={item.isChecked}
-                            onChange={() => handleIsChecked(item.id)}
-                            style={{ marginRight: '0.7rem' }}
-                        />
-                        <span>
-                            {item.isChecked ? <del>{item.text}</del> : <span>{item.text}</span>}
-                        </span>
-                    </li>
-                ))}
-            </ul>
+            <div style={borderStyle}>
+                <ul style={listItemStyle}>
+                    {list.map((item) => (
+                        <li key={item.id} style={{ marginBottom: '0.5rem' }}>
+                            <input
+                                type="checkbox"
+                                checked={item.isChecked}
+                                onChange={() => handleIsChecked(item.id)}
+                                style={{ marginRight: '0.7rem' }}
+                            />
+                            <span>
+                                {item.isChecked ? <del>{item.text}</del> : <span>{item.text}</span>}
+                            </span>
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </div>
     );
 };
 
 export default TodoList;
+
+const containerStyle = {
+    marginTop: '2rem',
+    marginBottom: '0.7rem',
+};
+
+const inputStyle = {
+    padding: '0.1rem', 
+    marginRight: '1rem',
+}
+
+const borderStyle = {
+    borderWidth: '1px',
+    borderColor: 'black',
+    borderStyle: 'solid',
+    borderRadius: '0.4rem',
+    padding: '1rem',
+};
+
+const listItemStyle = {
+    listStyleType: 'none',
+    padding: 0,
+    margin: 0,
+};
