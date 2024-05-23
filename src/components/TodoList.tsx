@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
+import { MdDeleteOutline } from "react-icons/md";
 
 type Todo = {
     id: number;
@@ -30,6 +31,10 @@ const TodoList: React.FC = () => {
         }
     };
 
+    const handleDelete = (id: number) => {
+        setList(list.filter((thing) => thing.id !== id))
+    };
+
     return (
         <div>
             <h1>{title}</h1>
@@ -43,10 +48,10 @@ const TodoList: React.FC = () => {
                 />
                 <Button variant="outline-dark" onClick={handleAdd}>Add</Button>
             </div>
-            <div style={borderStyle}>
-                <ul style={listItemStyle}>
-                    {list.map((item) => (
-                        <li key={item.id} style={{ marginBottom: '0.5rem' }}>
+            <ul style={listContainerStyle}>
+                {list.map((item) => (
+                    <li key={item.id} style={listItemStyle}>
+                        <div>
                             <input
                                 type="checkbox"
                                 checked={item.isChecked}
@@ -56,10 +61,11 @@ const TodoList: React.FC = () => {
                             <span>
                                 {item.isChecked ? <del>{item.text}</del> : <span>{item.text}</span>}
                             </span>
-                        </li>
-                    ))}
-                </ul>
-            </div>
+                        </div>
+                        <MdDeleteOutline onClick={() => handleDelete(item.id)} />
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 };
@@ -72,21 +78,25 @@ const containerStyle = {
 };
 
 const inputStyle = {
-    padding: '0.1rem', 
+    padding: '0.1rem',
     marginRight: '1rem',
-}
+};
 
-const borderStyle = {
+const listContainerStyle = {
+    listStyleType: 'none',
+    width: '70%',
     borderWidth: '1px',
     borderColor: 'black',
     borderStyle: 'solid',
     borderRadius: '0.4rem',
-    padding: '1rem',
+    padding: '0.7rem 1rem',
     marginBottom: '1rem'
 };
 
 const listItemStyle = {
-    listStyleType: 'none',
-    padding: 0,
-    margin: 0,
+    marginBottom: '0.5rem',
+    display: 'flex',
+    flexDirection: 'row' as 'row',
+    justifyContent: 'space-between',
+    margin: '0.2rem 0'
 };
