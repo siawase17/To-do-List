@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.css';
 import TodoList from './components/TodoList';
-import Timer from './components/Timer';
+import Clock from './components/Timer';
 
 function App() {
   return (
     <div className="container">
       <TodoList />
-      <Timer />
+      <Clock />
     </div>
   );
 }

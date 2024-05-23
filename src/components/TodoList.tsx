@@ -82,6 +82,7 @@ const borderStyle = {
     borderStyle: 'solid',
     borderRadius: '0.4rem',
     padding: '1rem',
+    marginBottom: '1rem'
 };
 
 const listItemStyle = {
