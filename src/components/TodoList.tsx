@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { MdDeleteOutline } from "react-icons/md";
+import { DetailModal } from './DetailModal';
 
 type Todo = {
     id: number;
@@ -11,6 +12,8 @@ type Todo = {
 const TodoList: React.FC = () => {
     const title: string = 'To-do List';
     const [inputText, setInputText] = useState<string>('');
+    const [showDetail, setShowDetail] = useState<boolean>(false);
+    const [selectedThing, setSelectedThing] = useState<Todo | null>(null);
     const [list, setList] = useState<Todo[]>([
         { id: 1, text: '공부하기', isChecked: false },
         { id: 2, text: '운동하기', isChecked: false }
@@ -29,6 +32,15 @@ const TodoList: React.FC = () => {
             setList([...list, { id: Date.now(), text: inputText, isChecked: false }]);
             setInputText('');
         }
+    };
+
+    const handleItemDetail = (item: Todo) => {
+        setShowDetail(true);
+        setSelectedThing(item);
+    };
+
+    const handleCloseDetail = () => {
+        setShowDetail(false);
     };
 
     const handleDelete = (id: number) => {
@@ -58,7 +70,7 @@ const TodoList: React.FC = () => {
                                 onChange={() => handleIsChecked(item.id)}
                                 style={{ marginRight: '0.7rem' }}
                             />
-                            <span>
+                            <span onClick={() => handleItemDetail(item)}>
                                 {item.isChecked ? <del>{item.text}</del> : <span>{item.text}</span>}
                             </span>
                         </div>
@@ -66,6 +78,7 @@ const TodoList: React.FC = () => {
                     </li>
                 ))}
             </ul>
+            <DetailModal isShow={showDetail} content={selectedThing} handleClose={handleCloseDetail}/>
         </div>
     );
 };
